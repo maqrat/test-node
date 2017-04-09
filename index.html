@@ -9,15 +9,18 @@
 
   <button onclick="vote()" id="button">Голосовать!</button> <br>
 
-  <form action="" method="POST" name="form-subm" id="sub-form">
+  <form action="/subm-form" method="POST" name="form-subm" id="sub-form">
     <input type="text" name="randomt" value="value-text">
     <button type="submit">Submit</button>
   </form>
 
   <script>
-    var myForm = document.getElementById('sub-form');
+//    var myForm = document.getElementById('sub-form');
+//    document.getElementById('sub-form').onsubmit = function (el) {
+//      el.preventDefault();
+//    };
 
-    myForm.onsubmit = function () {
+    /*myForm.onsubmit = function () {
 
       var xhr = new XMLHttpRequest();
 
@@ -37,7 +40,9 @@
       };
 
       xhr.send(null);
-    };
+
+      return false;
+    };*/
 
 
     function vote() {

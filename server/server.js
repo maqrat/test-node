@@ -30,21 +30,23 @@ function accept(req, res) {
 
   } else if (req.url == '/subm') {
 
-    res.end(console.log("req.url/subm"));
+    // res.end(console.log("req.url/subm"));
+    res.end("req.url/subm");
 
-  } else if (req.method == 'POST') {
+  } else if (req.url == '/subm-form' && req.method == 'POST') {
 
+    console.log(req.method);
 
     var body = '';
-    console.log('req.method-post');
 
     req.on('data', function (data) {
       body += data;
 
       // Too much POST data, kill the connection!
       // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-      if (body.length > 1e6)
+      if (body.length > 1e6) {
         req.connection.destroy();
+      }
 
       console.log(body.length);
     });
@@ -56,17 +58,16 @@ function accept(req, res) {
       console.log(post.randomt);
 
     });
+    // res.write('<script>setTimeout(function () { window.location.href = "/"; }, 0);</script>');
+    res.writeHead(302, { //no redirection
+      'Location': '/'
+    });
+    res.end("form respond");
 
   } else {
     // иначе считаем это запросом к обычному файлу и выводим его
     file.serve(req, res); // (если он есть)
-
   }
-
-
-
-  //console.log(value);
-
 }
 
 
