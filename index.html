@@ -1,0 +1,80 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <meta charset="utf-8">
+</head>
+
+<body>
+
+  <button onclick="vote()" id="button">Голосовать!</button> <br>
+
+  <form action="" method="POST" name="form-subm" id="sub-form">
+    <input type="text" name="randomt" value="value-text">
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    var myForm = document.getElementById('sub-form');
+
+    myForm.onsubmit = function () {
+
+      var xhr = new XMLHttpRequest();
+
+      xhr.open('GET', 'subm', true);
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState != 4) { //потому что просто столько стадий чегото
+
+          return;
+        }
+
+        if (xhr.status != 200) {
+          // обработать ошибку
+          alert('Ошибка такая-то ' + xhr.status + ': ' + xhr.statusText);
+          return;
+        }
+
+      };
+
+      xhr.send(null);
+    };
+
+
+    function vote() {
+      document.getElementById('button').innerHTML = ' ... ';
+
+      var xhr = new XMLHttpRequest();
+
+
+      //конфигурирует
+      xhr.open('GET', 'vote', true);
+
+
+      // коллбек обработчик ответа
+      xhr.onreadystatechange = function() {
+
+        //debugger
+        if (xhr.readyState != 4) { //потому что просто столько стадий чегото
+          return;
+        }
+
+        if (xhr.status != 200) {
+          // обработать ошибку
+          alert('Ошибка ' + xhr.status + ': ' + xhr.statusText);
+          return;
+        }
+
+        // обработать результат
+        document.getElementById('button').innerHTML = xhr.responseText;
+      };
+
+      //  отправляет
+
+      xhr.send(null);
+
+    }
+  </script>
+
+</body>
+
+</html>
