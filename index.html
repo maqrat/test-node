@@ -8,8 +8,25 @@
 <body>
 
   <button onclick="vote()" id="button">Голосовать!</button> <br>
+  <br>
+  <br>
+  <br>
+
+  <form id        =  "uploadForm"
+        enctype   =  "multipart/form-data"
+        action    =  "/api/photo"
+        method    =  "post"
+  >
+    <input type="file" name="userPhoto" />
+    <input type="submit" value="Upload Image" name="submit">
+  </form>
+
+  <br>
+  <br>
+  <br>
 
   <form action="/subm-form" method="POST" name="form-subm" id="sub-form">
+    <input type="file" name="image-file" alert="image-alert" multiple="multiple">
     <input type="text" name="randomt" value="value-text">
     <button type="submit">Submit</button>
   </form>
