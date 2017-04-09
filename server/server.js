@@ -18,7 +18,8 @@ var file = new static.Server('.');
 function accept(req, res) {
 
   console.log('Server running on port 4002');
-  console.log(req.url);
+  // console.log(req.url);
+  // console.log(req.method);
 
   // если URL запроса /vote, то...
   if (req.url == '/vote') {
@@ -33,6 +34,7 @@ function accept(req, res) {
 
   } else if (req.method == 'POST') {
 
+
     var body = '';
     console.log('req.method-post');
 
@@ -41,8 +43,8 @@ function accept(req, res) {
 
       // Too much POST data, kill the connection!
       // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-      if (body.length > 18)
-        request.connection.destroy();
+      if (body.length > 1e6)
+        req.connection.destroy();
 
       console.log(body.length);
     });
