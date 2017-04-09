@@ -8,6 +8,12 @@ http.createServer(function(req, res) {
 
 console.log('Server running on port 4003');*/
 
+// var formidable = require('formidable');
+var fs = require('fs');
+
+var bodyParser = require('body-parser')
+
+
 var express =   require('express');
 var multer  =   require('multer');
 var app =   express();
@@ -16,10 +22,10 @@ var storage =   multer.diskStorage({
     callback(null, './uploads');
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
+    callback(null, file.fieldname + '-' + Date.now() + '.png');
   }
 });
-var upload = multer({ storage : storage}).single('userPhoto');
+var upload = multer({ storage : storage}).single('puzzleImg');
 
 // var http = require('http');
 // var url = require('url');
@@ -28,12 +34,29 @@ var upload = multer({ storage : storage}).single('userPhoto');
 // var file = new static.Server('.');
 var path = require('path');
 
-
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.get('/',function(req,res){
-  res.sendFile(path.join(__dirname, '../', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+app.get('/vote',function(req,res){
+  // через 1.5 секунды ответить сообщением
+  setTimeout(function() {
+    res.end('Ваш голос принят: ' + new Date());
+  }, 1500);
 });
 
 app.post('/api/photo',function(req,res){
+
+  upload(req,res,function(err) {
+    if(err) {
+      return res.end("Error uploading file.");
+    }
+    res.end("File is uploaded");
+
+  });
+});
+app.post('/img-load',function(req,res){
   upload(req,res,function(err) {
     if(err) {
       return res.end("Error uploading file.");
@@ -91,8 +114,6 @@ app.listen(3000,function(){
  console.log(post.randomt);
 
  var img = post['image-file'];
- // res.sendFile(__dirname + "/index.html");
- img.sendFile(path.join(__dirname, '../upload'));
 
  });
  // res.write('<script>setTimeout(function () { window.location.href = "/"; }, 0);</script>');
