@@ -6,7 +6,7 @@
 </head>
 
 <body>
-
+<!--
   <button onclick="vote()" id="button">Голосовать!</button> <br>
   <br>
   <br>
@@ -44,14 +44,16 @@
 
   <br>
   <br>
-  <br>
+  <br>-->
 
-  <form enctype="multipart/form-data" action="/img-load" method="post" name="fileinfo">
+  <form enctype="multipart/form-data" action="/img-load" method="post" name="formImgData">
+      <label>Custom file label:</label>
+      <input type="text" name="filelabel" value="customfilelabel"/><br />
     <label>File to stash:</label>
     <input type="file" required name="puzzleImg"/>
     <input type="submit" value="Stash the file!" />
   </form>
-  <div></div>
+  <div id="output"></div>
 
   <script>
 //    var myForm = document.getElementById('sub-form');
@@ -107,10 +109,10 @@
     });*/
 
 
-var form = document.forms.namedItem("fileinfo");
+var form = document.forms.namedItem("formImgData");
 form.addEventListener('submit', function(ev) {
 
-  var oOutput = document.querySelector("div"),
+  var oOutput = document.getElementById("output"),
           oData = new FormData(form);
 
   oData.append("CustomField", "This is some extra data");

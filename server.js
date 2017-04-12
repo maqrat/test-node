@@ -22,7 +22,7 @@ var storage =   multer.diskStorage({
     callback(null, './uploads');
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now() + '.png');
+    callback(null, Date.now()  + '-' + file.originalname);
   }
 });
 var upload = multer({ storage : storage}).single('puzzleImg');
@@ -39,7 +39,7 @@ app.get('/',function(req,res){
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.get('/vote',function(req,res){
+/*app.get('/vote',function(req,res){
   // через 1.5 секунды ответить сообщением
   setTimeout(function() {
     res.end('Ваш голос принят: ' + new Date());
@@ -55,19 +55,30 @@ app.post('/api/photo',function(req,res){
     res.end("File is uploaded");
 
   });
-});
-app.post('/img-load',function(req,res){
+});*/
+app.post('/img-load', function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
   upload(req,res,function(err) {
     if(err) {
       return res.end("Error uploading file.");
     }
+    console.log(req.file);
+    console.log(req.body);
     res.end("File is uploaded");
-
   });
-});
+})
+// app.post('/img-load',function(req,res){
+//   upload(req,res,function(err) {
+//     if(err) {
+//       return res.end("Error uploading file.");
+//     }
+//     res.end("File is uploaded");
+//   });
+// });
 
-app.listen(3000,function(){
-  console.log("Working on port 3000");
+app.listen(4003,function(){
+  console.log("Working on port 4003");
 });
 
 /*
